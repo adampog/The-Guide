@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!--
+      Source for screensaver.txt: "DON'T PANIC" in the theme's cover font (Rubik Black),
+      black on white. Render it at 2400x400, then convert it to terminal block art at the
+      size of Omarchy's default screensaver (113 columns x 8 rows):
+        omarchy-transcode-ascii screensaver.png screensaver.txt --mode block --width 113 --height 8
+    -->
+    <title>Screensaver Lettering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@900&display=block" rel="stylesheet" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 2400px;
+        height: 400px;
+        background: #fff;
+        overflow: hidden;
+      }
+      .logo {
+        width: 2400px;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        font:
+          900 260px/1 "Rubik",
+          sans-serif;
+        color: #000;
+        /* Spaced a little wider (so letters stay apart in block art) and stretched taller, so it converts to exactly 113 x 8 like the default */
+        letter-spacing: 8px;
+        transform: scaleY(1.34);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="logo">DON’T PANIC</div>
+  </body>
+</html>
