@@ -1,0 +1,95 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@600;700&display=block" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;overflow:hidden}
+  body{width:3440px;height:1440px;background:#0e0c0b}
+  svg{display:block}
+  .hero{font-family:"Archivo Black","Nimbus Sans",sans-serif}
+  .caps{font-family:"Archivo","Nimbus Sans",sans-serif;font-weight:700}
+  .q{font-family:"C059","Liberation Serif",serif;font-style:italic}
+</style></head>
+<body>
+<svg width="3440" height="1440" viewBox="0 0 3440 1440">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#3a1a12" stop-opacity=".55"/>
+      <stop offset=".5" stop-color="#1b1715" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#0e0c0b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+      <stop offset=".5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#050403" stop-opacity=".85"/>
+    </radialGradient>
+    <linearGradient id="fill42" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff7a2f"/>
+      <stop offset=".45" stop-color="#f04a23"/>
+      <stop offset="1" stop-color="#e8402a"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 .9  0 0 0 0 .8  0 0 0 .7 -.3"/>
+    </filter>
+  </defs>
+
+  <rect width="3440" height="1440" fill="#0e0c0b"/>
+  <g id="stars"></g>
+  <ellipse cx="1720" cy="720" rx="1500" ry="900" fill="url(#glow)"/>
+  <g id="orbits" fill="none"></g>
+  <rect width="3440" height="1440" fill="url(#vig)"/>
+
+  <!-- header line -->
+  <g text-anchor="middle">
+    <text class="caps" x="1720" y="214" font-size="40" letter-spacing="14" fill="#f2b632">THE ANSWER TO LIFE, THE UNIVERSE AND EVERYTHING</text>
+    <g stroke="#f2b632" stroke-width="3">
+      <line x1="1000" y1="262" x2="1660" y2="262"/>
+      <line x1="1780" y1="262" x2="2440" y2="262"/>
+    </g>
+    <path d="M1720 246 l4.5 11.5 11.5 4.5 -11.5 4.5 -4.5 11.5 -4.5 -11.5 -11.5 -4.5 11.5 -4.5z" fill="#ffcc5c"/>
+  </g>
+
+  <!-- hero 42 -->
+  <g text-anchor="middle" class="hero" font-size="980" letter-spacing="-10">
+    <!-- hard offset shadow -->
+    <text x="1744" y="1134" fill="#3a1a12" stroke="#3a1a12" stroke-width="36" stroke-linejoin="round" paint-order="stroke">42</text>
+    <!-- gold outline + fill -->
+    <text x="1720" y="1110" fill="url(#fill42)" stroke="#f2b632" stroke-width="30" stroke-linejoin="round" paint-order="stroke">42</text>
+    <!-- inner dark keyline -->
+    <text x="1720" y="1110" fill="none" stroke="#0e0c0b" stroke-width="4" stroke-linejoin="round" opacity=".7">42</text>
+    <text x="1720" y="1110" fill="url(#fill42)">42</text>
+  </g>
+
+  <!-- footer flourish -->
+  <g text-anchor="middle">
+    <text class="q" x="1720" y="1256" font-size="56" fill="#e9dfcc" letter-spacing="3">(now what was the question?)</text>
+    <text class="caps" x="1720" y="1336" font-size="22" letter-spacing="12" fill="#8c7f6c">DEEP THOUGHT &#183; 7&#189; MILLION YEARS OF COMPUTATION</text>
+  </g>
+
+  <!--grain-->
+</svg>
+<script>
+  // seeded random
+  let seed=42;const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
+  // starfield
+  let st='';
+  for(let i=0;i<520;i++){
+    const x=rnd()*3440,y=rnd()*1440,r=rnd()<.92?rnd()*1.4+.5:rnd()*2+1.6;
+    const c=rnd()<.15?'#ffcc5c':'#e9dfcc',o=(rnd()*.45+.12).toFixed(2);
+    st+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="${c}" opacity="${o}"/>`;
+  }
+  document.getElementById('stars').innerHTML=st;
+  // concentric orbit rings (flattened), with little planets
+  let ob='';
+  const radii=[640,820,1010,1220,1450,1700];
+  radii.forEach((R,i)=>{
+    ob+=`<ellipse cx="1720" cy="720" rx="${R}" ry="${R*.42}" stroke="#4a3e33" stroke-opacity="${(.55-i*.06).toFixed(2)}" stroke-width="2" ${i%2?'stroke-dasharray="2 14" stroke-linecap="round" stroke-width="3"':''}/>`;
+    const a=[3.6,0.35,2.6,5.6,1.1,4.3][i];
+    const px=1720+R*Math.cos(a),py=720+R*.42*Math.sin(a);
+    const pr=[9,6,14,7,11,5][i];
+    const col=['#9a6a2f','#f2b632','#f04a23','#8c7f6c','#ff7a2f','#e9dfcc'][i];
+    ob+=`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${pr}" fill="${col}" opacity=".85"/>`;
+  });
+  document.getElementById('orbits').innerHTML=ob;
+</script>
+</body></html>

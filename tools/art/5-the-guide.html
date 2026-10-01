@@ -1,0 +1,179 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@900&family=Cinzel:wght@600&display=block" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;width:3440px;height:1440px;overflow:hidden;background:#0e0c0b}
+  svg{display:block}
+  .title{font-family:'Rubik',sans-serif;font-weight:900;font-size:330px;letter-spacing:6px}
+  .foil{font-family:'Cinzel',serif;font-weight:600;font-size:34px;letter-spacing:14px}
+</style></head>
+<body>
+<svg width="3440" height="1440" viewBox="0 0 3440 1440" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- Leather: height map from greyscale shapes + grain noise, then lit -->
+  <filter id="leather" x="0" y="0" width="3440" height="1440" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="h0"/>
+    <feGaussianBlur in="h0" stdDeviation="60" result="hSoft"/>
+    <feGaussianBlur in="h0" stdDeviation="9" result="hMid"/>
+    <feGaussianBlur in="h0" stdDeviation="2.2" result="hSharp"/>
+    <feComposite in="hSoft" in2="hMid" operator="arithmetic" k2="0.55" k3="0.3" result="hS1"/>
+    <feComposite in="hS1" in2="hSharp" operator="arithmetic" k2="1" k3="0.15" result="hShape"/>
+    <!-- pebble grain -->
+    <feTurbulence type="turbulence" baseFrequency="0.045" numOctaves="2" seed="7" result="pebble"/>
+    <feColorMatrix in="pebble" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2.2 0 0 0 1.25" result="pebbleA"/>
+    <!-- creases -->
+    <feTurbulence type="turbulence" baseFrequency="0.006 0.011" numOctaves="4" seed="21" result="crease"/>
+    <feColorMatrix in="crease" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.6 0 0 0 1" result="creaseA"/>
+    <!-- fine pores -->
+    <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="3" result="pore"/>
+    <feColorMatrix in="pore" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="poreA"/>
+    <feComposite in="pebbleA" in2="creaseA" operator="arithmetic" k2="0.55" k3="0.45" result="tex1"/>
+    <feComposite in="tex1" in2="poreA" operator="arithmetic" k2="1" k3="0" result="tex"/>
+    <feComposite in="hShape" in2="tex" operator="arithmetic" k2="0.75" k3="0.042" result="height"/>
+    <feDiffuseLighting in="height" surfaceScale="15" diffuseConstant="1" lighting-color="#221b17" result="diff">
+      <feDistantLight azimuth="235" elevation="48"/>
+    </feDiffuseLighting>
+    <feSpecularLighting in="height" surfaceScale="15" specularConstant="0.7" specularExponent="10" lighting-color="#6e5c4e" result="spec">
+      <feDistantLight azimuth="235" elevation="38"/>
+    </feSpecularLighting>
+    <feComposite in="spec" in2="height" operator="in" result="specIn"/>
+    <feComposite in="diff" in2="specIn" operator="arithmetic" k2="1" k3="0.55"/>
+  </filter>
+
+  <clipPath id="panelsClip"><rect x="560" y="150" width="2320" height="372" rx="46"/><rect x="560" y="918" width="2320" height="372" rx="46"/></clipPath>
+  <filter id="soft" x="-5%" y="-20%" width="110%" height="140%"><feGaussianBlur stdDeviation="18"/></filter>
+  <!-- stitch: tiny raised thread -->
+  <filter id="stitch" x="-5%" y="-5%" width="110%" height="110%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1.4" result="b"/>
+    <feSpecularLighting in="b" surfaceScale="3" specularConstant="0.9" specularExponent="18" lighting-color="#d8b479" result="s">
+      <feDistantLight azimuth="235" elevation="45"/>
+    </feSpecularLighting>
+    <feComposite in="s" in2="SourceAlpha" operator="in" result="sIn"/>
+    <feOffset in="SourceAlpha" dx="2" dy="3" result="o"/>
+    <feGaussianBlur in="o" stdDeviation="2" result="sh"/>
+    <feFlood flood-color="#000" flood-opacity="0.85"/>
+    <feComposite in2="sh" operator="in" result="shadow"/>
+    <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/><feMergeNode in="sIn"/></feMerge>
+  </filter>
+
+  <!-- painted lettering: slight emboss + wear -->
+  <filter id="paint" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="ab"/>
+    <feSpecularLighting in="ab" surfaceScale="5" specularConstant="0.7" specularExponent="22" lighting-color="#ffe2b0" result="spec">
+      <feDistantLight azimuth="235" elevation="42"/>
+    </feSpecularLighting>
+    <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn"/>
+    <feDiffuseLighting in="ab" surfaceScale="5" diffuseConstant="1.15" lighting-color="#fff" result="diff">
+      <feDistantLight azimuth="235" elevation="55"/>
+    </feDiffuseLighting>
+    <feComposite in="SourceGraphic" in2="diff" operator="arithmetic" k1="1" result="lit"/>
+    <!-- wear: knock out tiny flecks -->
+    <feTurbulence type="fractalNoise" baseFrequency="0.11" numOctaves="4" seed="11" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -26 20.6" result="wearA"/>
+    <feComposite in="lit" in2="wearA" operator="in" result="worn"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="5" result="g"/>
+    <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.25 0.14" result="speck"/>
+    <feFlood flood-color="#000"/>
+    <feComposite in2="speck" operator="in" result="dark"/>
+    <feComposite in="dark" in2="worn" operator="in" result="darkIn"/>
+    <feMerge><feMergeNode in="worn"/><feMergeNode in="darkIn"/><feMergeNode in="specIn"/></feMerge>
+  </filter>
+
+  <!-- shadow/deboss under lettering -->
+  <filter id="drop" x="-10%" y="-20%" width="120%" height="140%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="6" result="d"/>
+    <feGaussianBlur in="d" stdDeviation="10" result="b"/>
+    <feOffset dx="8" dy="12" result="o"/>
+    <feFlood flood-color="#000" flood-opacity="0.9"/>
+    <feComposite in2="o" operator="in"/>
+  </filter>
+
+  <!-- gold foil -->
+  <filter id="foil" x="-5%" y="-40%" width="110%" height="180%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="ab"/>
+    <feSpecularLighting in="ab" surfaceScale="2" specularConstant="1" specularExponent="16" lighting-color="#fff0c8" result="s">
+      <feDistantLight azimuth="235" elevation="40"/>
+    </feSpecularLighting>
+    <feComposite in="s" in2="SourceAlpha" operator="in" result="sIn"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves="3" seed="2" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -12 8.2" result="wearA"/>
+    <feComposite in="SourceGraphic" in2="wearA" operator="in" result="worn"/>
+    <feOffset in="SourceAlpha" dx="-1.5" dy="-1.5" result="hi"/>
+    <feFlood flood-color="#000" flood-opacity="0.8"/>
+    <feComposite in2="hi" operator="in" result="deb"/>
+    <feMerge><feMergeNode in="deb"/><feMergeNode in="worn"/><feMergeNode in="sIn"/></feMerge>
+  </filter>
+
+  <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffcc5c"/><stop offset="0.5" stop-color="#f2b632"/><stop offset="1" stop-color="#b8802a"/>
+  </linearGradient>
+  <linearGradient id="redG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ff5a2e"/><stop offset="0.55" stop-color="#f04a23"/><stop offset="1" stop-color="#c8361a"/>
+  </linearGradient>
+
+  <radialGradient id="pool" cx="0.42" cy="0.38" r="0.75">
+    <stop offset="0" stop-color="#ff9a5a" stop-opacity="0.07"/>
+    <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0.75"/>
+  </radialGradient>
+  <radialGradient id="sheen" cx="0.38" cy="0.25" r="0.7">
+    <stop offset="0" stop-color="#6a5442" stop-opacity="0.32"/>
+    <stop offset="0.6" stop-color="#6a5442" stop-opacity="0.08"/>
+    <stop offset="1" stop-color="#6a5442" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="edgeL" x1="0" x2="1">
+    <stop offset="0" stop-color="#000" stop-opacity="0.85"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
+  </linearGradient>
+</defs>
+
+<!-- ===== leather height map (greyscale = height) ===== -->
+<g filter="url(#leather)">
+  <rect width="3440" height="1440" fill="#7a7a7a"/>
+  <!-- spine hinge groove -->
+  <rect x="236" y="-20" width="26" height="1480" rx="13" fill="#2a2a2a"/>
+  <rect x="3178" y="-20" width="20" height="1480" rx="10" fill="#4a4a4a"/>
+  <!-- tooled border channel around cover -->
+  <rect x="380" y="70" width="2680" height="1300" rx="34" fill="none" stroke="#585858" stroke-width="18"/>
+  <!-- pillow panels -->
+  <rect x="560" y="150" width="2320" height="372" rx="46" fill="#ffffff"/>
+  <rect x="560" y="918" width="2320" height="372" rx="46" fill="#ffffff"/>
+  <!-- grooves framing the panels -->
+  <rect x="534" y="124" width="2372" height="424" rx="62" fill="none" stroke="#3e3e3e" stroke-width="10"/>
+  <rect x="534" y="892" width="2372" height="424" rx="62" fill="none" stroke="#3e3e3e" stroke-width="10"/>
+  <!-- slightly recessed band for title -->
+  <rect x="560" y="572" width="2320" height="296" rx="20" fill="#6a6a6a"/>
+</g>
+
+<!-- stitching along the cover border -->
+<g filter="url(#stitch)">
+  <rect x="352" y="42" width="2736" height="1356" rx="44" fill="none" stroke="#8a6a3e" stroke-width="5" stroke-linecap="round" stroke-dasharray="16 13"/>
+  <rect x="408" y="98" width="2624" height="1244" rx="26" fill="none" stroke="#8a6a3e" stroke-width="5" stroke-linecap="round" stroke-dasharray="16 13"/>
+</g>
+
+<!-- title -->
+<g transform="translate(1720,720)">
+  <text class="title" filter="url(#drop)" text-anchor="middle" dominant-baseline="central" y="8" fill="#000" stroke="#000" stroke-width="30" stroke-linejoin="round">DON’T PANIC</text>
+  <g filter="url(#paint)">
+    <text class="title" text-anchor="middle" dominant-baseline="central" y="8" fill="url(#redG)" stroke="url(#goldG)" stroke-width="22" stroke-linejoin="round" paint-order="stroke">DON’T PANIC</text>
+    <text class="title" text-anchor="middle" dominant-baseline="central" y="8" fill="url(#redG)">DON’T PANIC</text>
+  </g>
+</g>
+
+<!-- small gold-foil lines inside panels -->
+<g filter="url(#foil)" fill="url(#goldG)">
+  <text class="foil" x="1720" y="1228" text-anchor="middle">THE HITCHHIKER’S GUIDE TO THE GALAXY</text>
+</g>
+
+<!-- pillow sheen -->
+<g clip-path="url(#panelsClip)"><g filter="url(#soft)">
+  <rect x="560" y="150" width="2320" height="372" rx="46" fill="url(#sheen)"/>
+  <rect x="560" y="918" width="2320" height="372" rx="46" fill="url(#sheen)"/>
+</g></g>
+<!-- lighting / vignette -->
+<rect width="3440" height="1440" fill="url(#pool)"/>
+<rect x="0" y="0" width="300" height="1440" fill="url(#edgeL)"/>
+<rect x="3140" y="0" width="300" height="1440" fill="url(#edgeL)" transform="rotate(180 3290 720)"/>
+</svg>
+</body></html>

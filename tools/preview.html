@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Guide Preview</title>
+<!-- Mock Omarchy desktop used to render preview.png. Open at 1800x1012. -->
+<style>
+  :root {
+    --accent: #f04a23; --selection: #3a1a12; --muted: #4a3e33;
+    --bg: #0e0c0b; --bg-dark: #090807; --bg-darker: #050404; --bg-light: #1b1715;
+    --fg: #e9dfcc; --fg-dark: #8c7f6c; --fg-bright: #fbf7ee;
+    --red: #e8402a; --yellow: #f2b632; --orange: #ff7a2f; --green: #a9b84c;
+    --cyan: #6fb5a6; --blue: #7fa3c4; --magenta: #d77b8f;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg) url("../backgrounds/5-the-guide.png") center / cover no-repeat;
+    color: var(--fg);
+    font: 14px/1.5 "Cascadia Mono", Consolas, "JetBrains Mono", monospace;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 26px 1fr;
+  }
+  .bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 12px; background: var(--bg); color: var(--fg); font-size: 13px;
+  }
+  .ws span { margin-right: 10px; color: var(--fg-dark); }
+  .ws .on { color: var(--accent); font-weight: bold; }
+  .bar .right span { margin-left: 14px; color: var(--fg); }
+  .desk {
+    display: grid; gap: 10px; padding: 10px;
+    grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+    min-height: 0;
+  }
+  .win {
+    background: rgba(14, 12, 11, 0.93);
+    border: 2px solid var(--muted); overflow: hidden; padding: 10px 14px;
+    white-space: pre; min-height: 0;
+  }
+  .win.focus { border-color: var(--accent); }
+  .nvim { grid-row: 1 / span 2; padding: 0; display: grid; grid-template-rows: 22px 1fr 22px; }
+  .tabs { background: var(--bg-dark); padding: 0 10px; color: var(--fg-dark); }
+  .tabs b { color: var(--fg-bright); background: var(--bg-light); padding: 0 10px; font-weight: normal; }
+  .code { padding: 8px 0; display: grid; grid-template-columns: 48px 1fr; overflow: hidden; }
+  .ln { color: var(--muted); text-align: right; padding-right: 12px; }
+  .ln .cur { color: var(--yellow); }
+  .line-cur { background: var(--bg-light); display: inline-block; width: 100%; }
+  .status { background: var(--bg-dark); display: flex; gap: 0; }
+  .status .mode { background: var(--accent); color: var(--bg); padding: 0 10px; font-weight: bold; }
+  .status .br { background: var(--selection); color: var(--fg); padding: 0 10px; }
+  .status .fill { flex: 1; }
+  .status .pos { background: var(--blue); color: var(--bg); padding: 0 10px; }
+  .k { color: var(--magenta); } .s { color: var(--green); } .c { color: var(--fg-dark); font-style: italic; }
+  .n { color: var(--orange); } .f { color: var(--blue); } .t { color: var(--cyan); } .y { color: var(--yellow); }
+  .r { color: var(--red); } .dim { color: var(--fg-dark); } .b { color: var(--fg-bright); font-weight: bold; }
+  .prompt { color: var(--accent); }
+  .sw { display: inline-block; width: 44px; height: 18px; margin-right: 4px; vertical-align: middle; }
+  .meter { display: inline-block; height: 9px; vertical-align: middle; }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <div class="ws"><span>◆</span><span class="on">1</span><span>2</span><span>3</span><span>4</span></div>
+    <div>Thursday 20:42</div>
+    <div class="right"><span>bt</span><span>wifi</span><span>vol 42%</span><span>bat 98%</span></div>
+  </div>
+
+  <div class="desk">
+    <div class="win nvim focus">
+      <div class="tabs"><b>guide.lua</b>  colors.toml  towel.rs</div>
+      <div class="code"><div class="ln">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+<span class="cur">28</span>
+29
+30
+31
+32
+33
+34
+35
+36</div><div><span class="c">-- The Guide, on the subject of towels</span>
+<span class="k">local</span> <span class="t">Towel</span> = {}
+<span class="t">Towel</span>.__index = <span class="t">Towel</span>
+
+<span class="k">local</span> ANSWER = <span class="n">42</span>
+<span class="k">local</span> PLANETS = { <span class="s">"Earth"</span>, <span class="s">"Magrathea"</span>, <span class="s">"Vogsphere"</span> }
+
+<span class="k">function</span> <span class="t">Towel</span>.<span class="f">new</span>(owner)
+  <span class="k">return</span> <span class="f">setmetatable</span>({
+    owner = owner,
+    wet = <span class="n">false</span>,
+    uses = { <span class="s">"warmth"</span>, <span class="s">"sail"</span>, <span class="s">"wave"</span>, <span class="s">"ward off"</span> },
+  }, <span class="t">Towel</span>)
+<span class="k">end</span>
+
+<span class="k">function</span> <span class="t">Towel</span>:<span class="f">know_where</span>()
+  <span class="c">-- a hoopy frood always does</span>
+  <span class="k">return</span> <span class="n">true</span>
+<span class="k">end</span>
+
+<span class="k">local function</span> <span class="f">panic</span>(reason)
+  <span class="k">if</span> reason == <span class="n">nil</span> <span class="k">then</span>
+    <span class="k">return</span> <span class="n">false</span>
+  <span class="k">end</span>
+  <span class="f">print</span>(<span class="s">"DON'T PANIC: "</span> .. reason)
+<span class="k">end</span>
+
+<span class="line-cur"><span class="k">local</span> towel = <span class="t">Towel</span>.<span class="f">new</span>(<span class="s">"Arthur"</span>)</span>
+<span class="k">for</span> _, p <span class="k">in</span> <span class="f">ipairs</span>(PLANETS) <span class="k">do</span>
+  <span class="k">if not</span> towel:<span class="f">know_where</span>() <span class="k">then</span>
+    <span class="f">panic</span>(<span class="s">"lost towel on "</span> .. p)
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="f">assert</span>(ANSWER == <span class="n">6</span> * <span class="n">7</span>, <span class="s">"hmm"</span>) <span class="c">-- close enough</span>
+</div></div>
+      <div class="status"><span class="mode">NORMAL</span><span class="br"> main</span><span class="fill"></span><span class="pos">28:1</span></div>
+    </div>
+
+    <div class="win"><span class="prompt">arthur@heart-of-gold</span> <span class="dim">~</span> <span class="prompt">❯</span> fastfetch
+<span class="b">arthur</span>@<span class="b">heart-of-gold</span>
+<span class="dim">────────────────────────</span>
+<span class="y">OS</span>      Omarchy (Arch Linux)
+<span class="y">WM</span>      Hyprland
+<span class="y">Theme</span>   The Guide
+<span class="y">Shell</span>   zsh
+<span class="y">Drive</span>   Infinite Improbability
+<span class="y">Uptime</span>  7.5 million years
+<span class="y">Answer</span>  42
+
+<span style="background:#0e0c0b" class="sw"></span><span style="background:#e8402a" class="sw"></span><span style="background:#a9b84c" class="sw"></span><span style="background:#f2b632" class="sw"></span><span style="background:#7fa3c4" class="sw"></span><span style="background:#d77b8f" class="sw"></span><span style="background:#6fb5a6" class="sw"></span><span style="background:#e9dfcc" class="sw"></span>
+
+<span class="prompt">arthur@heart-of-gold</span> <span class="dim">~</span> <span class="prompt">❯</span> <span class="line-cur" style="width:9px">&nbsp;</span></div>
+
+    <div class="win"><span class="b">btop</span>  <span class="dim">cpu</span>                              <span class="dim">20:42:00</span>
+<span class="t">Deep Thought </span> <span class="meter" style="width:300px;background:linear-gradient(90deg,#f2b632,#ff7a2f 60%,#f04a23)"></span> <span class="y"> 97%</span>
+<span class="t">Mem          </span> <span class="meter" style="width:120px;background:var(--blue)"></span> <span class="dim"> 4.2 / 42 GiB</span>
+<span class="t">Improbability</span> <span class="meter" style="width:200px;background:var(--magenta)"></span> <span class="dim"> 2^276709 : 1</span>
+
+<span class="dim">  PID  Program            Cpu%   Mem</span>
+<span class="b">    42 deep-thought       97.0  3.1G</span>
+  1978 vogon-poetry        0.3   12M
+   451 babel-fish          0.8   42M
+  2001 marvin              0.0  1.2G  <span class="dim">(depressed)</span>
+    99 towel-tracker       0.1    4M
+  1024 pan-galactic-gb     4.2  256M
+</div>
+  </div>
+</body>
+</html>
