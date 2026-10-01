@@ -1,264 +1,526 @@
 <!doctype html>
-<html><head><meta charset="utf-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,500;0,600;1,500&display=block" rel="stylesheet">
-<style>
-  html,body{margin:0;padding:0;width:3440px;height:1440px;overflow:hidden;background:#0e0c0b}
-  svg{display:block}
-  .title{font-family:'Archivo Black',sans-serif;font-size:168px;letter-spacing:6px;fill:#f04a23;stroke:#f2b632;stroke-width:7;paint-order:stroke;stroke-linejoin:round}
-  .kick{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:30px;letter-spacing:9px;fill:#8c7f6c}
-  .lbl{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:27px;letter-spacing:3.2px;fill:#e9dfcc}
-  .sub{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:21px;letter-spacing:2.5px;fill:#8c7f6c}
-  .cap{font-family:'Barlow',sans-serif;font-weight:500;font-size:33px;fill:#e9dfcc}
-  .capb{font-family:'Barlow',sans-serif;font-weight:600;font-size:33px;fill:#ff7a2f;letter-spacing:1px}
-  .foot{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:22px;letter-spacing:5px;fill:#4a3e33}
-  .glyph{font-family:'Noto Sans','Noto Sans CJK TC',sans-serif;font-weight:700;font-size:24px;text-anchor:middle;dominant-baseline:central}
-</style></head>
-<body>
-<svg id="s" width="3440" height="1440" viewBox="0 0 3440 1440" xmlns="http://www.w3.org/2000/svg">
-<defs>
-  <radialGradient id="vig" cx="50%" cy="50%" r="62%">
-    <stop offset="0" stop-color="#1b1715"/>
-    <stop offset=".55" stop-color="#110f0d"/>
-    <stop offset="1" stop-color="#070605"/>
-  </radialGradient>
-  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-    <path d="M40 0H0V40" fill="none" stroke="#f2b632" stroke-opacity=".035" stroke-width="1"/>
-  </pattern>
-  <pattern id="grid2" width="200" height="200" patternUnits="userSpaceOnUse">
-    <path d="M200 0H0V200" fill="none" stroke="#f2b632" stroke-opacity=".055" stroke-width="1"/>
-  </pattern>
-  <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
-    <circle cx="7" cy="7" r="2.4" fill="#090807" fill-opacity=".35"/>
-  </pattern>
-  <pattern id="stripes" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)">
-    <rect width="34" height="34" fill="#1b1715"/>
-    <rect width="13" height="34" fill="#f04a23"/>
-  </pattern>
-  <pattern id="hatch" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-    <rect width="16" height="16" fill="#3a1a12"/>
-    <rect width="4" height="16" fill="#e8402a" fill-opacity=".7"/>
-  </pattern>
-  <!-- body silhouette (facing left) -->
-  <path id="body" d="M905 742 C985 600 1170 500 1470 480 C1820 458 2160 525 2440 692 L2440 788 C2160 935 1820 995 1470 982 C1170 970 985 880 905 742 Z"/>
-  <path id="inner" d="M1150 742 C1180 640 1290 550 1480 532 C1800 510 2120 560 2392 708 L2392 772 C2120 905 1800 945 1480 932 C1290 922 1180 845 1150 742 Z"/>
-  <clipPath id="cInner"><use href="#inner"/></clipPath>
-  <clipPath id="cBody"><use href="#body"/></clipPath>
-</defs>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!--
+  Wallpaper 3: a retro labelled cutaway diagram of the Babel fish. Pairs with wallpaper 4:
+  same title style, label fonts, grid and footer.
+  Rendered by tools/render.sh (headless Chromium, 3440x1440). Fonts load from Google Fonts,
+  so rendering needs a network connection. Keep text and the focal subject inside the central
+  ~2400px so 16:9 screens, which crop the sides, still show everything.
+-->
+    <title>The Babel Fish</title>
 
-<!-- ============ background ============ -->
-<rect width="3440" height="1440" fill="url(#vig)"/>
-<rect width="3440" height="1440" fill="url(#grid)"/>
-<rect width="3440" height="1440" fill="url(#grid2)"/>
-<g id="waves" fill="none" stroke-linecap="round"></g>
-<g id="stars"></g>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,500;0,600;1,500&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 3440px;
+        height: 1440px;
+        overflow: hidden;
+        background: #0e0c0b;
+      }
+      svg {
+        display: block;
+      }
+      .title {
+        font-family: "Archivo Black", sans-serif;
+        font-size: 168px;
+        letter-spacing: 6px;
+        fill: #f04a23;
+        stroke: #f2b632;
+        stroke-width: 7;
+        paint-order: stroke;
+        stroke-linejoin: round;
+      }
+      .kick {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 30px;
+        letter-spacing: 9px;
+        fill: #8c7f6c;
+      }
+      .lbl {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 600;
+        font-size: 27px;
+        letter-spacing: 3.2px;
+        fill: #e9dfcc;
+      }
+      .sub {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 500;
+        font-size: 21px;
+        letter-spacing: 2.5px;
+        fill: #8c7f6c;
+      }
+      .cap {
+        font-family: "Barlow", sans-serif;
+        font-weight: 500;
+        font-size: 33px;
+        fill: #e9dfcc;
+      }
+      .capb {
+        font-family: "Barlow", sans-serif;
+        font-weight: 600;
+        font-size: 33px;
+        fill: #ff7a2f;
+        letter-spacing: 1px;
+      }
+      .foot {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 500;
+        font-size: 22px;
+        letter-spacing: 5px;
+        fill: #4a3e33;
+      }
+      .glyph {
+        font-family: "Noto Sans", "Noto Sans CJK TC", sans-serif;
+        font-weight: 700;
+        font-size: 24px;
+        text-anchor: middle;
+        dominant-baseline: central;
+      }
+    </style>
+  </head>
+  <body>
+    <svg id="s" width="3440" height="1440" viewBox="0 0 3440 1440" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="vig" cx="50%" cy="50%" r="62%">
+          <stop offset="0" stop-color="#1b1715" />
+          <stop offset=".55" stop-color="#110f0d" />
+          <stop offset="1" stop-color="#070605" />
+        </radialGradient>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M40 0H0V40" fill="none" stroke="#f2b632" stroke-opacity=".035" stroke-width="1" />
+        </pattern>
+        <pattern id="grid2" width="200" height="200" patternUnits="userSpaceOnUse">
+          <path d="M200 0H0V200" fill="none" stroke="#f2b632" stroke-opacity=".055" stroke-width="1" />
+        </pattern>
+        <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
+          <circle cx="7" cy="7" r="2.4" fill="#090807" fill-opacity=".35" />
+        </pattern>
+        <pattern
+          id="stripes"
+          width="34"
+          height="34"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(-38)"
+        >
+          <rect width="34" height="34" fill="#1b1715" />
+          <rect width="13" height="34" fill="#f04a23" />
+        </pattern>
+        <pattern
+          id="hatch"
+          width="16"
+          height="16"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(45)"
+        >
+          <rect width="16" height="16" fill="#3a1a12" />
+          <rect width="4" height="16" fill="#e8402a" fill-opacity=".7" />
+        </pattern>
+        <!-- body silhouette (facing left) -->
+        <path
+          id="body"
+          d="M905 742 C985 600 1170 500 1470 480 C1820 458 2160 525 2440 692 L2440 788 C2160 935 1820 995 1470 982 C1170 970 985 880 905 742 Z"
+        />
+        <path
+          id="inner"
+          d="M1150 742 C1180 640 1290 550 1480 532 C1800 510 2120 560 2392 708 L2392 772 C2120 905 1800 945 1480 932 C1290 922 1180 845 1150 742 Z"
+        />
+        <clipPath id="cInner"><use href="#inner" /></clipPath>
+        <clipPath id="cBody"><use href="#body" /></clipPath>
+      </defs>
 
-<!-- frame / registration -->
-<g stroke="#4a3e33" stroke-width="2" fill="none">
-  <rect x="470" y="60" width="2500" height="1320" stroke-opacity=".0"/>
-</g>
-<g id="corners" stroke="#8c7f6c" stroke-width="2" fill="none" opacity=".55"></g>
+      <!-- ============ background ============ -->
+      <rect width="3440" height="1440" fill="url(#vig)" />
+      <rect width="3440" height="1440" fill="url(#grid)" />
+      <rect width="3440" height="1440" fill="url(#grid2)" />
+      <g id="waves" fill="none" stroke-linecap="round"></g>
+      <g id="stars"></g>
 
-<!-- ============ title ============ -->
-<text class="kick" x="1720" y="92" text-anchor="middle">THE GUIDE · FAUNA OF THE GALAXY · PLATE Nº 42</text>
-<text class="title" x="1720" y="262" text-anchor="middle">THE BABEL FISH</text>
+      <!-- frame / registration -->
+      <g stroke="#4a3e33" stroke-width="2" fill="none">
+        <rect x="470" y="60" width="2500" height="1320" stroke-opacity=".0" />
+      </g>
+      <g id="corners" stroke="#8c7f6c" stroke-width="2" fill="none" opacity=".55"></g>
 
-<!-- ============ the fish ============ -->
-<g id="fish" transform="translate(1720 720) scale(.92) translate(-1808 -720)">
-  <!-- dorsal fin -->
-  <g>
-    <path d="M1560 498 L1690 352 L1735 362 L1700 470 Z" fill="#f04a23"/>
-    <path d="M1700 470 L1735 362 L1975 420 L2000 520 Z" fill="#f2b632"/>
-    <path d="M1760 482 L1782 388 M1830 492 L1850 404 M1900 503 L1918 420 M1960 514 L1974 434" stroke="#0e0c0b" stroke-width="10"/>
-  </g>
-  <!-- pelvic / anal fins -->
-  <path d="M1400 965 L1340 1065 L1420 1058 L1530 975 Z" fill="#f04a23"/>
-  <path d="M1960 945 L2020 1040 L2080 1032 L2120 912 Z" fill="#f2b632"/>
-  <path d="M1990 952 L2030 1022 M2045 940 L2062 1020" stroke="#0e0c0b" stroke-width="9"/>
-  <!-- tail -->
-  <g>
-    <path d="M2420 740 L2700 470 L2752 480 L2640 740 L2752 1000 L2700 1010 Z" fill="#f04a23"/>
-    <path d="M2420 740 L2700 470 L2640 740 L2700 1010 Z" fill="#f2b632"/>
-    <path d="M2470 740 L2655 560 M2470 740 L2620 650 M2470 740 L2620 740 M2470 740 L2620 830 M2470 740 L2655 920" stroke="#0e0c0b" stroke-width="9" stroke-linecap="round"/>
-  </g>
+      <!-- ============ title ============ -->
+      <text class="kick" x="1720" y="92" text-anchor="middle">
+        THE GUIDE · FAUNA OF THE GALAXY · PLATE Nº 42
+      </text>
+      <text class="title" x="1720" y="262" text-anchor="middle">THE BABEL FISH</text>
 
-  <!-- body skin -->
-  <use href="#body" fill="#f2b632"/>
-  <!-- skin scales at front -->
-  <g clip-path="url(#cBody)">
-    <rect x="900" y="450" width="1600" height="560" fill="url(#dots)"/>
-    <path d="M905 742 C985 600 1170 500 1470 480 L1470 360 L860 360 Z" fill="#ffcc5c" opacity=".35"/>
-  </g>
+      <!-- ============ the fish ============ -->
+      <g id="fish" transform="translate(1720 720) scale(.92) translate(-1808 -720)">
+        <!-- dorsal fin -->
+        <g>
+          <path d="M1560 498 L1690 352 L1735 362 L1700 470 Z" fill="#f04a23" />
+          <path d="M1700 470 L1735 362 L1975 420 L2000 520 Z" fill="#f2b632" />
+          <path
+            d="M1760 482 L1782 388 M1830 492 L1850 404 M1900 503 L1918 420 M1960 514 L1974 434"
+            stroke="#0e0c0b"
+            stroke-width="10"
+          />
+        </g>
+        <!-- pelvic / anal fins -->
+        <path d="M1400 965 L1340 1065 L1420 1058 L1530 975 Z" fill="#f04a23" />
+        <path d="M1960 945 L2020 1040 L2080 1032 L2120 912 Z" fill="#f2b632" />
+        <path d="M1990 952 L2030 1022 M2045 940 L2062 1020" stroke="#0e0c0b" stroke-width="9" />
+        <!-- tail -->
+        <g>
+          <path d="M2420 740 L2700 470 L2752 480 L2640 740 L2752 1000 L2700 1010 Z" fill="#f04a23" />
+          <path d="M2420 740 L2700 470 L2640 740 L2700 1010 Z" fill="#f2b632" />
+          <path
+            d="M2470 740 L2655 560 M2470 740 L2620 650 M2470 740 L2620 740 M2470 740 L2620 830 M2470 740 L2655 920"
+            stroke="#0e0c0b"
+            stroke-width="9"
+            stroke-linecap="round"
+          />
+        </g>
 
-  <!-- cutaway interior -->
-  <use href="#inner" fill="#090807"/>
-  <g clip-path="url(#cInner)">
-    <!-- idiom filter (rear diagonal stripes) -->
-    <rect x="2060" y="500" width="400" height="460" fill="url(#stripes)"/>
-    <rect x="2060" y="500" width="14" height="460" fill="#f2b632"/>
-    <!-- brainwave absorption mesh (upper mid) -->
-    <path d="M1280 540 L2060 540 L2060 625 C1800 625 1600 605 1280 605 Z" fill="url(#hatch)"/>
-    <!-- subtext conduit (spine) -->
-    <path d="M1180 690 C1500 660 1800 670 2400 730" stroke="#e9dfcc" stroke-width="10" fill="none"/>
-    <g id="vert" stroke="#e9dfcc" stroke-width="6"></g>
+        <!-- body skin -->
+        <use href="#body" fill="#f2b632" />
+        <!-- skin scales at front -->
+        <g clip-path="url(#cBody)">
+          <rect x="900" y="450" width="1600" height="560" fill="url(#dots)" />
+          <path d="M905 742 C985 600 1170 500 1470 480 L1470 360 L860 360 Z" fill="#ffcc5c" opacity=".35" />
+        </g>
 
-    <!-- polyglot lobe (brain) -->
-    <g>
-      <rect x="1205" y="600" width="170" height="122" rx="50" fill="#e9dfcc"/>
-      <path d="M1225 640 q15 -24 30 0 t30 0 t30 0 t30 0 t30 0" stroke="#f04a23" stroke-width="7" fill="none" stroke-linecap="round"/>
-      <path d="M1225 680 q15 -24 30 0 t30 0 t30 0 t30 0 t30 0" stroke="#f04a23" stroke-width="7" fill="none" stroke-linecap="round"/>
-      <path d="M1290 604 L1290 718" stroke="#9a6a2f" stroke-width="5"/>
-    </g>
-    <!-- thought-wave intake gills -->
-    <path d="M1205 760 C1240 800 1240 860 1215 900" stroke="#ff7a2f" stroke-width="12" fill="none"/>
-    <path d="M1250 752 C1290 800 1290 870 1262 915" stroke="#ff7a2f" stroke-width="12" fill="none"/>
-    <path d="M1295 748 C1340 800 1340 875 1310 925" stroke="#ff7a2f" stroke-width="12" fill="none"/>
+        <!-- cutaway interior -->
+        <use href="#inner" fill="#090807" />
+        <g clip-path="url(#cInner)">
+          <!-- idiom filter (rear diagonal stripes) -->
+          <rect x="2060" y="500" width="400" height="460" fill="url(#stripes)" />
+          <rect x="2060" y="500" width="14" height="460" fill="#f2b632" />
+          <!-- brainwave absorption mesh (upper mid) -->
+          <path d="M1280 540 L2060 540 L2060 625 C1800 625 1600 605 1280 605 Z" fill="url(#hatch)" />
+          <!-- subtext conduit (spine) -->
+          <path d="M1180 690 C1500 660 1800 670 2400 730" stroke="#e9dfcc" stroke-width="10" fill="none" />
+          <g id="vert" stroke="#e9dfcc" stroke-width="6"></g>
 
-    <!-- conjugation pump (heart) -->
-    <g transform="translate(1440 840)">
-      <path d="M0 -58 L58 0 L0 58 L-58 0 Z" fill="#e8402a"/>
-      <circle r="22" fill="#090807"/>
-      <circle r="10" fill="#ffcc5c"/>
-    </g>
-    <path d="M1440 782 L1440 752" stroke="#e8402a" stroke-width="10" fill="none"/>
+          <!-- polyglot lobe (brain) -->
+          <g>
+            <rect x="1205" y="600" width="170" height="122" rx="50" fill="#e9dfcc" />
+            <path
+              d="M1225 640 q15 -24 30 0 t30 0 t30 0 t30 0 t30 0"
+              stroke="#f04a23"
+              stroke-width="7"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <path
+              d="M1225 680 q15 -24 30 0 t30 0 t30 0 t30 0 t30 0"
+              stroke="#f04a23"
+              stroke-width="7"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <path d="M1290 604 L1290 718" stroke="#9a6a2f" stroke-width="5" />
+          </g>
+          <!-- thought-wave intake gills -->
+          <path d="M1205 760 C1240 800 1240 860 1215 900" stroke="#ff7a2f" stroke-width="12" fill="none" />
+          <path d="M1250 752 C1290 800 1290 870 1262 915" stroke="#ff7a2f" stroke-width="12" fill="none" />
+          <path d="M1295 748 C1340 800 1340 875 1310 925" stroke="#ff7a2f" stroke-width="12" fill="none" />
 
-    <!-- translation matrix -->
-    <g id="matrix"></g>
+          <!-- conjugation pump (heart) -->
+          <g transform="translate(1440 840)">
+            <path d="M0 -58 L58 0 L0 58 L-58 0 Z" fill="#e8402a" />
+            <circle r="22" fill="#090807" />
+            <circle r="10" fill="#ffcc5c" />
+          </g>
+          <path d="M1440 782 L1440 752" stroke="#e8402a" stroke-width="10" fill="none" />
 
-    <!-- syntax bladder -->
-    <g>
-      <ellipse cx="1930" cy="790" rx="120" ry="62" fill="#ff7a2f"/>
-      <ellipse cx="1930" cy="790" rx="120" ry="62" fill="none" stroke="#090807" stroke-width="8" stroke-dasharray="2 18"/>
-      <path d="M1830 790 L2030 790" stroke="#090807" stroke-width="6"/>
-      <path d="M1850 760 L2010 760 M1850 820 L2010 820" stroke="#090807" stroke-width="4" opacity=".6"/>
-    </g>
+          <!-- translation matrix -->
+          <g id="matrix"></g>
 
-    <!-- grammar coil -->
-    <path id="coil" d="" stroke="#f2b632" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <!-- syntax bladder -->
+          <g>
+            <ellipse cx="1930" cy="790" rx="120" ry="62" fill="#ff7a2f" />
+            <ellipse
+              cx="1930"
+              cy="790"
+              rx="120"
+              ry="62"
+              fill="none"
+              stroke="#090807"
+              stroke-width="8"
+              stroke-dasharray="2 18"
+            />
+            <path d="M1830 790 L2030 790" stroke="#090807" stroke-width="6" />
+            <path
+              d="M1850 760 L2010 760 M1850 820 L2010 820"
+              stroke="#090807"
+              stroke-width="4"
+              opacity=".6"
+            />
+          </g>
 
-    <!-- small-talk reservoir -->
-    <path d="M1580 875 C1600 860 1700 860 1760 868 C1800 878 1800 925 1760 928 L1600 928 C1570 925 1565 890 1580 875 Z" fill="#9a6a2f"/>
-    <g fill="#e9dfcc" opacity=".9"><circle cx="1610" cy="895" r="5"/><circle cx="1645" cy="912" r="5"/><circle cx="1685" cy="885" r="5"/><circle cx="1720" cy="910" r="5"/><circle cx="1760" cy="890" r="5"/><circle cx="1595" cy="915" r="4"/></g>
+          <!-- grammar coil -->
+          <path id="coil" d="" stroke="#f2b632" stroke-width="7" fill="none" stroke-linecap="round" />
 
-    <!-- telepathic output duct -->
-    <path d="M1838 752 C1820 745 1810 745 1790 745 L1170 745" stroke="#f2b632" stroke-width="14" fill="none"/>
-    <path d="M1838 752 C1820 745 1810 745 1790 745 L1170 745" stroke="#090807" stroke-width="4" fill="none" stroke-dasharray="14 14"/>
-  </g>
-  <!-- inner rim -->
-  <use href="#inner" fill="none" stroke="#090807" stroke-width="6"/>
+          <!-- small-talk reservoir -->
+          <path
+            d="M1580 875 C1600 860 1700 860 1760 868 C1800 878 1800 925 1760 928 L1600 928 C1570 925 1565 890 1580 875 Z"
+            fill="#9a6a2f"
+          />
+          <g fill="#e9dfcc" opacity=".9">
+            <circle cx="1610" cy="895" r="5" />
+            <circle cx="1645" cy="912" r="5" />
+            <circle cx="1685" cy="885" r="5" />
+            <circle cx="1720" cy="910" r="5" />
+            <circle cx="1760" cy="890" r="5" />
+            <circle cx="1595" cy="915" r="4" />
+          </g>
 
-  <!-- head details on skin -->
-  <circle cx="1040" cy="690" r="40" fill="#090807"/>
-  <circle cx="1040" cy="690" r="27" fill="#e9dfcc"/>
-  <circle cx="1046" cy="694" r="14" fill="#090807"/>
-  <circle cx="1034" cy="682" r="5" fill="#fbf7ee"/>
-  <!-- mouth / docking snout -->
-  <path d="M905 742 L975 760 L930 778" fill="#090807"/>
-  <path d="M905 742 l-40 -5 l0 12 Z" fill="#ff7a2f"/>
-  <!-- irony detector antenna -->
-  <path d="M1110 540 C1100 470 1060 430 1010 410" stroke="#f2b632" stroke-width="7" fill="none" stroke-linecap="round"/>
-  <circle cx="1004" cy="407" r="17" fill="#f04a23" stroke="#f2b632" stroke-width="5"/>
-  <!-- lateral sensors -->
-  <g id="lateral" fill="#090807"></g>
-</g>
+          <!-- telepathic output duct -->
+          <path
+            d="M1838 752 C1820 745 1810 745 1790 745 L1170 745"
+            stroke="#f2b632"
+            stroke-width="14"
+            fill="none"
+          />
+          <path
+            d="M1838 752 C1820 745 1810 745 1790 745 L1170 745"
+            stroke="#090807"
+            stroke-width="4"
+            fill="none"
+            stroke-dasharray="14 14"
+          />
+        </g>
+        <!-- inner rim -->
+        <use href="#inner" fill="none" stroke="#090807" stroke-width="6" />
 
-<!-- ============ labels ============ -->
-<g id="labels"></g>
+        <!-- head details on skin -->
+        <circle cx="1040" cy="690" r="40" fill="#090807" />
+        <circle cx="1040" cy="690" r="27" fill="#e9dfcc" />
+        <circle cx="1046" cy="694" r="14" fill="#090807" />
+        <circle cx="1034" cy="682" r="5" fill="#fbf7ee" />
+        <!-- mouth / docking snout -->
+        <path d="M905 742 L975 760 L930 778" fill="#090807" />
+        <path d="M905 742 l-40 -5 l0 12 Z" fill="#ff7a2f" />
+        <!-- irony detector antenna -->
+        <path
+          d="M1110 540 C1100 470 1060 430 1010 410"
+          stroke="#f2b632"
+          stroke-width="7"
+          fill="none"
+          stroke-linecap="round"
+        />
+        <circle cx="1004" cy="407" r="17" fill="#f04a23" stroke="#f2b632" stroke-width="5" />
+        <!-- lateral sensors -->
+        <g id="lateral" fill="#090807"></g>
+      </g>
 
-<!-- ============ caption ============ -->
-<g text-anchor="middle">
-  <text class="cap" x="1720" y="1222"><tspan class="capb">THE BABEL FISH</tspan> lives on the stray brainwaves of everyone around it, digests the parts nobody said out loud,</text>
-  <text class="cap" x="1720" y="1268">and excretes a tidy translation directly into the mind of its host. Insert in ear. Understand everything.</text>
-  <text class="cap" x="1720" y="1314" style="fill:#8c7f6c;font-style:italic">Regret some of it.</text>
-</g>
-<text class="foot" x="1720" y="1392" text-anchor="middle">FIG. 3 — CUTAWAY, NOT TO SCALE · HANDLE WITH DAMP HANDS</text>
-</svg>
+      <!-- ============ labels ============ -->
+      <g id="labels"></g>
 
-<script>
-const NS='http://www.w3.org/2000/svg';
-const el=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;};
+      <!-- ============ caption ============ -->
+      <g text-anchor="middle">
+        <text class="cap" x="1720" y="1222">
+          <tspan class="capb">THE BABEL FISH</tspan>
+          lives on the stray brainwaves of everyone around it, digests the parts nobody said out loud,
+        </text>
+        <text class="cap" x="1720" y="1268">
+          and excretes a tidy translation directly into the mind of its host. Insert in ear. Understand
+          everything.
+        </text>
+        <text class="cap" x="1720" y="1314" style="fill: #8c7f6c; font-style: italic">
+          Regret some of it.
+        </text>
+      </g>
+      <text class="foot" x="1720" y="1392" text-anchor="middle">
+        FIG. 3 — CUTAWAY, NOT TO SCALE · HANDLE WITH DAMP HANDS
+      </text>
+    </svg>
 
-// --- background: translation "sound waves" off both edges
-const waves=document.getElementById('waves');
-for(let i=0;i<14;i++){
-  const r=220+i*70, op=(0.22-i*0.013).toFixed(3);
-  el('circle',{cx:-60,cy:720,r,stroke:'#f04a23','stroke-opacity':op,'stroke-width':i%3==0?3:1.5,'stroke-dasharray':i%2?'4 14':'none'},waves);
-  el('circle',{cx:3500,cy:720,r,stroke:'#f2b632','stroke-opacity':op,'stroke-width':i%3==0?3:1.5,'stroke-dasharray':i%2?'4 14':'none'},waves);
-}
-// --- stars, weighted to the edges
-let seed=42;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
-const stars=document.getElementById('stars');
-for(let i=0;i<420;i++){
-  const x=rnd()*3440,y=rnd()*1440;
-  const d=Math.abs(x-1720)/1720; if(rnd()>d*1.15) continue; if(x>1000&&x<2440&&y>60&&y<1180) continue;
-  const big=rnd()<.08;
-  el('circle',{cx:x.toFixed(1),cy:y.toFixed(1),r:big?2.4:(0.8+rnd()*1.1),fill:rnd()<.2?'#ffcc5c':'#e9dfcc','fill-opacity':(0.25+rnd()*0.5).toFixed(2)},stars);
-}
-// --- corner marks around safe zone
-const cg=document.getElementById('corners');
-const box={x0:540,y0:40,x1:2900,y1:1410},L=46;
-[[box.x0,box.y0,1,1],[box.x1,box.y0,-1,1],[box.x0,box.y1,1,-1],[box.x1,box.y1,-1,-1]].forEach(([x,y,sx,sy])=>{
-  el('path',{d:`M${x} ${y+sy*L} L${x} ${y} L${x+sx*L} ${y}`},cg);
-});
+    <script>
+      const NS = "http://www.w3.org/2000/svg";
+      const el = (tag, attrs, parent) => {
+        const e = document.createElementNS(NS, tag);
+        for (const k in attrs) e.setAttribute(k, attrs[k]);
+        if (parent) parent.appendChild(e);
+        return e;
+      };
 
-// --- vertebrae along spine
-const vg=document.getElementById('vert');
-for(let x=1240;x<2380;x+=44){const t=(x-1180)/1220;const y=690+(-30*t*(1-t)*4)*0+ (x<1800? -((x-1180)/620)*22 + 0 : 0);}
-const spine=document.querySelector('path[d^="M1180 690"]');
-const len=spine.getTotalLength();
-for(let s=60;s<len-20;s+=42){const p=spine.getPointAtLength(s);el('path',{d:`M${p.x} ${p.y-16} L${p.x} ${p.y+16}`},vg);}
+      // --- background: translation "sound waves" off both edges
+      const waves = document.getElementById("waves");
+      for (let i = 0; i < 14; i++) {
+        const r = 220 + i * 70,
+          op = (0.22 - i * 0.013).toFixed(3);
+        el(
+          "circle",
+          {
+            cx: -60,
+            cy: 720,
+            r,
+            stroke: "#f04a23",
+            "stroke-opacity": op,
+            "stroke-width": i % 3 == 0 ? 3 : 1.5,
+            "stroke-dasharray": i % 2 ? "4 14" : "none",
+          },
+          waves,
+        );
+        el(
+          "circle",
+          {
+            cx: 3500,
+            cy: 720,
+            r,
+            stroke: "#f2b632",
+            "stroke-opacity": op,
+            "stroke-width": i % 3 == 0 ? 3 : 1.5,
+            "stroke-dasharray": i % 2 ? "4 14" : "none",
+          },
+          waves,
+        );
+      }
+      // --- stars, weighted to the edges
+      let seed = 42;
+      const rnd = () => {
+        seed = (seed * 16807) % 2147483647;
+        return seed / 2147483647;
+      };
+      const stars = document.getElementById("stars");
+      for (let i = 0; i < 420; i++) {
+        const x = rnd() * 3440,
+          y = rnd() * 1440;
+        const d = Math.abs(x - 1720) / 1720;
+        if (rnd() > d * 1.15) continue;
+        if (x > 1000 && x < 2440 && y > 60 && y < 1180) continue;
+        const big = rnd() < 0.08;
+        el(
+          "circle",
+          {
+            cx: x.toFixed(1),
+            cy: y.toFixed(1),
+            r: big ? 2.4 : 0.8 + rnd() * 1.1,
+            fill: rnd() < 0.2 ? "#ffcc5c" : "#e9dfcc",
+            "fill-opacity": (0.25 + rnd() * 0.5).toFixed(2),
+          },
+          stars,
+        );
+      }
+      // --- corner marks around safe zone
+      const cg = document.getElementById("corners");
+      const box = { x0: 540, y0: 40, x1: 2900, y1: 1410 },
+        L = 46;
+      [
+        [box.x0, box.y0, 1, 1],
+        [box.x1, box.y0, -1, 1],
+        [box.x0, box.y1, 1, -1],
+        [box.x1, box.y1, -1, -1],
+      ].forEach(([x, y, sx, sy]) => {
+        el("path", { d: `M${x} ${y + sy * L} L${x} ${y} L${x + sx * L} ${y}` }, cg);
+      });
 
-// --- translation matrix (grid of glyphs)
-const mg=document.getElementById('matrix');
-const glyphs=['A','Ж','あ','Ω','字','ب','ñ','ש','ß','ก','अ','ü','Я','ㅎ','λ','?'];
-const cols=['#e9dfcc','#f2b632','#f04a23','#e9dfcc','#ff7a2f','#e9dfcc','#f2b632','#e9dfcc'];
-let k=0;
-for(let r=0;r<2;r++)for(let c=0;c<6;c++){
-  const x=1530+c*44,y=770+r*44; const col=cols[(r*3+c*5)%cols.length];
-  el('rect',{x,y,width:38,height:38,rx:4,fill:col},mg);
-  const t=el('text',{x:x+19,y:y+20,class:'glyph',fill:'#090807'},mg);t.textContent=glyphs[k++%glyphs.length];
-}
+      // --- vertebrae along spine
+      const vg = document.getElementById("vert");
+      for (let x = 1240; x < 2380; x += 44) {
+        const t = (x - 1180) / 1220;
+        const y = 690 + -30 * t * (1 - t) * 4 * 0 + (x < 1800 ? -((x - 1180) / 620) * 22 + 0 : 0);
+      }
+      const spine = document.querySelector('path[d^="M1180 690"]');
+      const len = spine.getTotalLength();
+      for (let s = 60; s < len - 20; s += 42) {
+        const p = spine.getPointAtLength(s);
+        el("path", { d: `M${p.x} ${p.y - 16} L${p.x} ${p.y + 16}` }, vg);
+      }
 
-// --- grammar coil spiral
-let d='';const cx=1700,cy=860+0;
-for(let a=0;a<6*Math.PI;a+=0.15){const r=4+a*3.3;const x=cx+Math.cos(a)*r*1.4,y=cy+Math.sin(a)*r*0.0;}
-// a horizontal coil spring instead (reads better)
-d='M1830 885';
-for(let i=0;i<9;i++){const x=1830+i*24;d+=` C${x+6} 863 ${x+18} 863 ${x+24} 885 C${x+18} 907 ${x+8} 907 ${x+4} 885`; }
-document.getElementById('coil').setAttribute('d',d);
+      // --- translation matrix (grid of glyphs)
+      const mg = document.getElementById("matrix");
+      const glyphs = ["A", "Ж", "あ", "Ω", "字", "ب", "ñ", "ש", "ß", "ก", "अ", "ü", "Я", "ㅎ", "λ", "?"];
+      const cols = ["#e9dfcc", "#f2b632", "#f04a23", "#e9dfcc", "#ff7a2f", "#e9dfcc", "#f2b632", "#e9dfcc"];
+      let k = 0;
+      for (let r = 0; r < 2; r++)
+        for (let c = 0; c < 6; c++) {
+          const x = 1530 + c * 44,
+            y = 770 + r * 44;
+          const col = cols[(r * 3 + c * 5) % cols.length];
+          el("rect", { x, y, width: 38, height: 38, rx: 4, fill: col }, mg);
+          const t = el("text", { x: x + 19, y: y + 20, class: "glyph", fill: "#090807" }, mg);
+          t.textContent = glyphs[k++ % glyphs.length];
+        }
 
-// --- lateral line sensors (on skin, lower)
-const lat=document.getElementById('lateral');
+      // --- grammar coil spiral
+      let d = "";
+      const cx = 1700,
+        cy = 860 + 0;
+      for (let a = 0; a < 6 * Math.PI; a += 0.15) {
+        const r = 4 + a * 3.3;
+        const x = cx + Math.cos(a) * r * 1.4,
+          y = cy + Math.sin(a) * r * 0.0;
+      }
+      // a horizontal coil spring instead (reads better)
+      d = "M1830 885";
+      for (let i = 0; i < 9; i++) {
+        const x = 1830 + i * 24;
+        d += ` C${x + 6} 863 ${x + 18} 863 ${x + 24} 885 C${x + 18} 907 ${x + 8} 907 ${x + 4} 885`;
+      }
+      document.getElementById("coil").setAttribute("d", d);
 
-// --- labels
-const lg=document.getElementById('labels');
-const T=(x,y)=>[1720+.92*(x-1808),720+.92*(y-720)];
-function label(text,sub,ax0,ay0,ex,ey,side){
-  const [ax,ay]=T(ax0,ay0);
-  const g=el('g',{},lg);
-  const tx= side==='l'? ex-14 : ex+14;
-  el('path',{d:`M${ax} ${ay} L${ex} ${ey}`,stroke:'#090807','stroke-width':7,fill:'none','stroke-opacity':.8},g);
-  el('path',{d:`M${ax} ${ay} L${ex} ${ey}`,stroke:'#e9dfcc','stroke-width':2,fill:'none'},g);
-  el('circle',{cx:ax,cy:ay,r:6.5,fill:'#e9dfcc',stroke:'#090807','stroke-width':3},g);
-  el('circle',{cx:ex,cy:ey,r:2.5,fill:'#e9dfcc'},g);
-  const t=el('text',{x:tx,y:ey+9,class:'lbl','text-anchor':side==='l'?'end':'start'},g);t.textContent=text;
-  if(sub){const s=el('text',{x:tx,y:ey+38,class:'sub','text-anchor':side==='l'?'end':'start'},g);s.textContent=sub;}
-}
-label('IRONY DETECTOR','(EXPERIMENTAL)',1004,407,900,432,'l');
-label('POLYGLOT LOBE',null,1250,640,900,540,'l');
-label('EAR-DOCKING SNOUT',null,868,742,780,740,'l');
-label('TELEPATHIC OUTPUT DUCT',null,1180,745,900,850,'l');
-label('THOUGHT-WAVE INTAKE GILLS',null,1250,880,900,960,'l');
-label('CONJUGATION PUMP',null,1440,870,1180,1075,'l');
-label('TRANSLATION MATRIX',null,1560,850,1470,1120,'l');
-label('SMALL-TALK RESERVOIR',null,1700,905,1640,1120,'r');
-label('GRAMMAR SPRING',null,1930,885,2060,1075,'r');
-label('SYNTAX BLADDER',null,2000,800,2380,1120,'r');
-label('WHISPER ARRAY','TAIL · OMNIDIRECTIONAL',2640,860,2640,900,'r');
-label('BRAINWAVE ABSORPTION MESH',null,1420,570,1363,380,'l');
-label('ACCENT STABILISER FIN',null,1850,440,1980,320,'r');
-label('SUBTEXT CONDUIT',null,1990,704,2290,410,'r');
-label('IDIOM FILTER',null,2225,655,2620,400,'r');
-</script>
-</body></html>
+      // --- lateral line sensors (on skin, lower)
+      const lat = document.getElementById("lateral");
+
+      // --- labels
+      const lg = document.getElementById("labels");
+      const T = (x, y) => [1720 + 0.92 * (x - 1808), 720 + 0.92 * (y - 720)];
+      function label(text, sub, ax0, ay0, ex, ey, side) {
+        const [ax, ay] = T(ax0, ay0);
+        const g = el("g", {}, lg);
+        const tx = side === "l" ? ex - 14 : ex + 14;
+        el(
+          "path",
+          {
+            d: `M${ax} ${ay} L${ex} ${ey}`,
+            stroke: "#090807",
+            "stroke-width": 7,
+            fill: "none",
+            "stroke-opacity": 0.8,
+          },
+          g,
+        );
+        el("path", { d: `M${ax} ${ay} L${ex} ${ey}`, stroke: "#e9dfcc", "stroke-width": 2, fill: "none" }, g);
+        el("circle", { cx: ax, cy: ay, r: 6.5, fill: "#e9dfcc", stroke: "#090807", "stroke-width": 3 }, g);
+        el("circle", { cx: ex, cy: ey, r: 2.5, fill: "#e9dfcc" }, g);
+        const t = el(
+          "text",
+          { x: tx, y: ey + 9, class: "lbl", "text-anchor": side === "l" ? "end" : "start" },
+          g,
+        );
+        t.textContent = text;
+        if (sub) {
+          const s = el(
+            "text",
+            { x: tx, y: ey + 38, class: "sub", "text-anchor": side === "l" ? "end" : "start" },
+            g,
+          );
+          s.textContent = sub;
+        }
+      }
+      label("IRONY DETECTOR", "(EXPERIMENTAL)", 1004, 407, 900, 432, "l");
+      label("POLYGLOT LOBE", null, 1250, 640, 900, 540, "l");
+      label("EAR-DOCKING SNOUT", null, 868, 742, 780, 740, "l");
+      label("TELEPATHIC OUTPUT DUCT", null, 1180, 745, 900, 850, "l");
+      label("THOUGHT-WAVE INTAKE GILLS", null, 1250, 880, 900, 960, "l");
+      label("CONJUGATION PUMP", null, 1440, 870, 1180, 1075, "l");
+      label("TRANSLATION MATRIX", null, 1560, 850, 1470, 1120, "l");
+      label("SMALL-TALK RESERVOIR", null, 1700, 905, 1640, 1120, "r");
+      label("GRAMMAR SPRING", null, 1930, 885, 2060, 1075, "r");
+      label("SYNTAX BLADDER", null, 2000, 800, 2380, 1120, "r");
+      label("WHISPER ARRAY", "TAIL · OMNIDIRECTIONAL", 2640, 860, 2640, 900, "r");
+      label("BRAINWAVE ABSORPTION MESH", null, 1420, 570, 1363, 380, "l");
+      label("ACCENT STABILISER FIN", null, 1850, 440, 1980, 320, "r");
+      label("SUBTEXT CONDUIT", null, 1990, 704, 2290, 410, "r");
+      label("IDIOM FILTER", null, 2225, 655, 2620, 400, "r");
+    </script>
+  </body>
+</html>
