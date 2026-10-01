@@ -151,7 +151,7 @@
           </feMerge>
         </filter>
 
-        <!-- painted lettering: slight emboss + wear -->
+        <!-- painted lettering: clean paint with a slight emboss (diffuse shading plus a specular highlight) -->
         <filter id="paint" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB">
           <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="ab" />
           <feSpecularLighting
@@ -174,29 +174,10 @@
           >
             <feDistantLight azimuth="235" elevation="55" />
           </feDiffuseLighting>
+          <!-- multiply the paint by the shading -->
           <feComposite in="SourceGraphic" in2="diff" operator="arithmetic" k1="1" result="lit" />
-          <!-- wear: knock out tiny flecks -->
-          <feTurbulence type="fractalNoise" baseFrequency="0.11" numOctaves="4" seed="11" result="n" />
-          <feColorMatrix
-            in="n"
-            type="matrix"
-            values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -26 20.6"
-            result="wearA"
-          />
-          <feComposite in="lit" in2="wearA" operator="in" result="worn" />
-          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="5" result="g" />
-          <feColorMatrix
-            in="g"
-            type="matrix"
-            values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.25 0.14"
-            result="speck"
-          />
-          <feFlood flood-color="#000" />
-          <feComposite in2="speck" operator="in" result="dark" />
-          <feComposite in="dark" in2="worn" operator="in" result="darkIn" />
           <feMerge>
-            <feMergeNode in="worn" />
-            <feMergeNode in="darkIn" />
+            <feMergeNode in="lit" />
             <feMergeNode in="specIn" />
           </feMerge>
         </filter>
@@ -210,7 +191,7 @@
           <feComposite in2="o" operator="in" />
         </filter>
 
-        <!-- gold foil -->
+        <!-- gold foil: clean letters with a soft highlight, pressed into the leather -->
         <filter id="foil" x="-5%" y="-40%" width="110%" height="180%" color-interpolation-filters="sRGB">
           <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="ab" />
           <feSpecularLighting
@@ -224,20 +205,13 @@
             <feDistantLight azimuth="235" elevation="40" />
           </feSpecularLighting>
           <feComposite in="s" in2="SourceAlpha" operator="in" result="sIn" />
-          <feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves="3" seed="2" result="n" />
-          <feColorMatrix
-            in="n"
-            type="matrix"
-            values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -12 8.2"
-            result="wearA"
-          />
-          <feComposite in="SourceGraphic" in2="wearA" operator="in" result="worn" />
+          <!-- dark copy offset up-left, so the foil looks pressed into the leather -->
           <feOffset in="SourceAlpha" dx="-1.5" dy="-1.5" result="hi" />
           <feFlood flood-color="#000" flood-opacity="0.8" />
           <feComposite in2="hi" operator="in" result="deb" />
           <feMerge>
             <feMergeNode in="deb" />
-            <feMergeNode in="worn" />
+            <feMergeNode in="SourceGraphic" />
             <feMergeNode in="sIn" />
           </feMerge>
         </filter>
